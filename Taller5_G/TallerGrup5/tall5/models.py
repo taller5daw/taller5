@@ -4,10 +4,10 @@ from mongoengine import Document,EmbeddedDocument, fields
 
 # Create your models here.
 
-class Book(Document):
-	title = fields.StringField()
-	authors = fields.StringField()
+class libros(Document):
+	titulo = fields.StringField()
+	autores = fields.StringField()
 	isbn = fields.StringField()
-	rate = fields.StringField()
+	calificacionprom = fields.StringField()
 
 
