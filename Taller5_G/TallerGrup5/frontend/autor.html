@@ -47,11 +47,7 @@
 	<div class="row">
 		<div class="col text-left">
 			<h2>Libros de {{ autor.nombre }}</h2>
-			<b-table striped hover :items="libros" :fields="fields">
-				<template slot="[title]" slot-scope="data">
-					<a v-bind:href="'libro.html?id=' + data.item.id_libro">{{ data.item.title }}</a>
-				</template>
-			</b-table>	
+			<b-table striped hover :items="libros" :fields="fields"></b-table>	
 		</div>
 	</div>
 </div>

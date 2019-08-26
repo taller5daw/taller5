@@ -14,6 +14,7 @@ class Libro(models.Model):
 	id_libro = models.AutoField(primary_key=True)
 	title = models.CharField(max_length=50)
 	isbn = models.CharField(max_length=50)
+	mean_rate = models.DecimalField(null=True, max_digits=3, decimal_places=2)
 
 
 class Persona(models.Model):
@@ -28,6 +29,7 @@ class Persona(models.Model):
 class Rate(models.Model):
 	user = models.ForeignKey(User, null=False,blank=False,on_delete=models.CASCADE)
 	id_libro = models.ForeignKey(Libro, null=False,blank=False,on_delete=models.CASCADE)
+	rate = models.IntegerField(null=True)
 	class Meta:
 		unique_together=('user','id_libro')
 

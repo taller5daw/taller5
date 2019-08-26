@@ -19,13 +19,15 @@ with open(data_path, 'r', encoding='utf-8') as file:
     file.readline() # skip the header: titulo|autores|isbn|calificacion_promedio
     for line in file:
         line = line.strip()
-        title, authors, isbn, _ = line.split('|')
+        title, authors, isbn, mean_rate = line.split('|')
         authors = authors.split('-')
+        mean_rate = float(mean_rate)
 
         if title not in book_titles:
             book_to_save = Libro()
             book_to_save.title = title
             book_to_save.isbn = isbn
+            book_to_save.mean_rate = mean_rate
             book_to_save.save()
             book_titles.add(title)
         else:
