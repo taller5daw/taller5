@@ -80,25 +80,16 @@
 
 	//import axios from 'axios';
 		created: function(){
-			console.log("holi");
 			this.getLibros();
-			console.log(this.libros)
-			
 		},	
 		data:{
-
-
-			
-
 				fields:[
-
 				{key:'title', label:'Titulo'},
 				//{key: 'autores', label:'Autores'},
 				{key:'isbn',label:'ISBN'},
 				//{key: 'calificacionprom', label:'Calificaciones'}
 				],
 				libros:[],
-
 		}, 
 		methods:{
 			getLibros: function(){
@@ -107,8 +98,6 @@
 				const path = 'http://localhost:8000/api/v1.0/libro/';
 				axios.get(path).then((response)=> {
 					this.libros = response.data;
-					console.log("as");
-					console.log(response.data);
 				})
 				.catch((error)=>{
 					console.log(error)

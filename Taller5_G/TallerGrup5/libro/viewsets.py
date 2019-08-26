@@ -16,6 +16,18 @@ class LibroViewSet(viewsets.ModelViewSet):
 	queryset = Libro.objects.all()
 	serializer_class = LibroSerializer
 
+	def get_queryset(self):
+		"""
+		Optionally restricts the returned purchases to a given user,
+		by filtering against a `username` query parameter in the URL.
+		"""
+		queryset = Libro.objects.all()
+		autor = self.request.query_params.get('autor', None)
+		if autor is not None:
+			libros = map(lambda pair: pair.id_libro.id_libro, Autor_Libro.objects.filter(id_autor=autor))
+			queryset = Libro.objects.filter(pk__in=libros)
+		return queryset
+
 class PersonaViewSet(viewsets.ModelViewSet):
 	queryset = Persona.objects.all()
 	serializer_class = PersonaSerializer
