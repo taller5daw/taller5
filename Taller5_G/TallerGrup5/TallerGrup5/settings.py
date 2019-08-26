@@ -64,7 +64,9 @@ ROOT_URLCONF = 'TallerGrup5.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            #'templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

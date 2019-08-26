@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include("tall5.urls")),
     path('api/v1.0/', include('libro.urls')),
+    #url(r'',include('libro.urls')),
 ]

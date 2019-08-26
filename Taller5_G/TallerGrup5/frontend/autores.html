@@ -49,7 +49,7 @@
 <div class ="container">
 	<div class="row">
 		<div class="col text-left">
-			<h2>Listado de libros</h2>
+			<h2>Listado de Autores</h2>
 			<b-table striped hover :items="libros" :fields="fields"></b-table>	
 		</div>
 	</div>
@@ -81,7 +81,7 @@
 	//import axios from 'axios';
 		created: function(){
 			console.log("holi");
-			//this.getLibros();
+			this.getLibros();
 			console.log(this.libros)
 			
 		},	
@@ -92,9 +92,9 @@
 
 				fields:[
 
-				{key:'title', label:'Titulo'},
+				{key:'nombre', label:'Nombre'},
 				//{key: 'autores', label:'Autores'},
-				{key:'isbn',label:'ISBN'},
+				//{key:'isbn',label:'ISBN'},
 				//{key: 'calificacionprom', label:'Calificaciones'}
 				],
 				libros:[],
@@ -104,11 +104,11 @@
 			getLibros: function(){
 
 				//console.log("as");
-				const path = 'http://localhost:8000/api/v1.0/libro/';
+				const path = 'http://localhost:8000/api/v1.0/autor/';
 				axios.get(path).then((response)=> {
 					this.libros = response.data;
-					console.log("as");
-					console.log(response.data);
+					//console.log("as");
+					//console.log(response.data);
 				})
 				.catch((error)=>{
 					console.log(error)
