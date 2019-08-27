@@ -46,8 +46,13 @@
 <div class ="container">
 	<div class="row">
 		<div class="col text-left">
+			<br/>
 			<h2>Libros de {{ autor.nombre }}</h2>
-			<b-table striped hover :items="libros" :fields="fields"></b-table>	
+			<b-table striped hover :items="libros" :fields="fields">
+				<template slot="[title]" slot-scope="data">
+					<a v-bind:href="'libro.html?id=' + data.item.id_libro">{{ data.item.title }}</a>
+				</template>
+			</b-table>	
 		</div>
 	</div>
 </div>
@@ -95,8 +100,8 @@
 		},	
 		data:{
 			fields:[
-				{key:'title', label:'Titulo'},
-				{key:'isbn',label:'ISBN'},
+				{ key: 'title', label: 'Titulo' },
+				{ key:'mean_rate', label: 'Calificación' },
 				],
 			libros:[],
 			autor: {},
@@ -105,28 +110,25 @@
 			getLibros: function(autor_id){
 
 				const path = 'http://127.0.0.1:8000/api/v1.0/libro/?autor=' + autor_id;
-				axios.get(path).then((response)=> {
+				axios.get(path).then((response) => {
 					this.libros = response.data;
 				})
-				.catch((error)=>{
+				.catch((error) => {
 					console.log(error)
 				});
-
 			},
 			getAutor: function(autor_id){
 
 				const path = 'http://127.0.0.1:8000/api/v1.0/autor/' + autor_id;
-				axios.get(path).then((response)=> {
+				axios.get(path).then((response) => {
 					this.autor = response.data;
 				})
-				.catch((error)=>{
+				.catch((error) => {
 					console.log(error)
 				});
-
 			}
 		}
 	});
-
 </script>
 </body>
 </html>

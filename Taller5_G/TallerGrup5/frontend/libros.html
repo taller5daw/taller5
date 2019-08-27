@@ -49,8 +49,13 @@
 <div class ="container">
 	<div class="row">
 		<div class="col text-left">
+			<br/>
 			<h2>Listado de libros</h2>
-			<b-table striped hover :items="libros" :fields="fields"></b-table>	
+			<b-table striped hover :items="libros" :fields="fields">
+				<template slot="[title]" slot-scope="data">
+					<a v-bind:href="'libro.html?id=' + data.item.id_libro">{{ data.item.title }}</a>
+				</template>
+			</b-table>	
 		</div>
 	</div>
 </div>
@@ -77,55 +82,29 @@
 <script>
 	new Vue({
 		el:'#principal',
-
-	//import axios from 'axios';
 		created: function(){
 			this.getLibros();
 		},	
 		data:{
 				fields:[
-				{key:'title', label:'Titulo'},
-				//{key: 'autores', label:'Autores'},
-				{key:'isbn',label:'ISBN'},
-				//{key: 'calificacionprom', label:'Calificaciones'}
+					{ key: 'title', label: 'Titulo' },
+					{ key: 'mean_rate', label: 'Calificación' }
 				],
-				libros:[],
+				libros: [],
 		}, 
 		methods:{
 			getLibros: function(){
 
-				//console.log("as");
 				const path = 'http://localhost:8000/api/v1.0/libro/';
-				axios.get(path).then((response)=> {
+				axios.get(path).then((response) => {
 					this.libros = response.data;
 				})
-				.catch((error)=>{
+				.catch((error) => {
 					console.log(error)
 				});
-
 			}
-
-
-
 		}
-
-
-
-
-
-
-	
-
-
-
 	});
-	
-
 </script>
-
-
 </body>
-
-
-
 </html>

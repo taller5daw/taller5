@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Consulta</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <!-- Required Stylesheets -->
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"
+    />
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+</head>
+<body>
+
+<div id="principal">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="index.html">Inicio</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="libros.html">Libros<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="autores.html">Autores<span class="sr-only">(current)</span></a>
+      </li>
+  </ul>
+</div>
+
+</nav>
+
+<div class ="container">
+	<div class="row">
+		<div class="col text-left">
+			<br/>
+			<h2>{{ libro.title }}</h2>
+			<br/>
+			<div><strong>Calificación promedio: </strong><span>{{ libro.mean_rate }}</span></div>
+			<div><strong>ISBN: </strong><span>{{ libro.isbn }}</span></div>
+			<br/>
+			<b-table striped hover :items="autores" :fields="fields"></b-table>
+			<center>
+				<div class="form-group" id="rating-ability-wrapper">
+					<label class="control-label" for="rating">
+					<span class="field-label-header">Califica a este libro</span><br>
+					<span class="field-label-info"></span>
+					<input type="hidden" id="selected_rating" name="selected_rating" value="" required="required">
+					</label>
+					<h2 class="bold rating-header" style="">
+					<span class="selected-rating">0</span><small> / 5</small>
+					</h2>
+					<button type="button" class="btnrating btn btn-default btn-lg" data-attr="1" id="rating-star-1">
+						<i class="fa fa-star" aria-hidden="true"></i>
+					</button>
+					<button type="button" class="btnrating btn btn-default btn-lg" data-attr="2" id="rating-star-2">
+						<i class="fa fa-star" aria-hidden="true"></i>
+					</button>
+					<button type="button" class="btnrating btn btn-default btn-lg" data-attr="3" id="rating-star-3">
+						<i class="fa fa-star" aria-hidden="true"></i>
+					</button>
+					<button type="button" class="btnrating btn btn-default btn-lg" data-attr="4" id="rating-star-4">
+						<i class="fa fa-star" aria-hidden="true"></i>
+					</button>
+					<button type="button" class="btnrating btn btn-default btn-lg" data-attr="5" id="rating-star-5">
+						<i class="fa fa-star" aria-hidden="true"></i>
+					</button>
+				</div>
+			</center>
+		</div>
+	</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.0/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.5.1/vue-resource.min.js"></script>
+<!-- Load polyfills to support older browsers -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"></script>
+
+<!-- Required scripts -->
+<script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+<script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+
+	function change_rating(clicked) {
+		var previous_value = $("#selected_rating").val();
+		
+		var selected_value = $(clicked).attr("data-attr");
+		$("#selected_rating").val(selected_value);
+		
+		$(".selected-rating").empty();
+		$(".selected-rating").html(selected_value);
+		
+		for (i = 1; i <= selected_value; ++i) {
+			$("#rating-star-"+i).toggleClass('btn-warning');
+			$("#rating-star-"+i).toggleClass('btn-default');
+		}
+		
+		for (ix = 1; ix <= previous_value; ++ix) {
+			$("#rating-star-"+ix).toggleClass('btn-warning');
+			$("#rating-star-"+ix).toggleClass('btn-default');
+		}
+	}
+
+	function manage_rate(clicked){
+		let libro_id = GetURLParameter('id');
+		let user_id = "myemail"; // pseudo logged user
+
+		if(user_id != undefined){
+
+			let p_path = 'http://127.0.0.1:8000/api/v1.0/rate/';
+			let new_rate = $(clicked).attr("data-attr");
+			console.log(clicked);
+			console.log(new_rate);
+
+			let get_path = 'http://127.0.0.1:8000/api/v1.0/rate/?user=' + user_id + '&libro=' + libro_id;
+
+			axios.get(get_path).then((response) => {
+
+				id_rate = response.data[0].id;
+
+				axios.put(p_path + id_rate + '/',
+				{
+					user: user_id,
+					id_libro: libro_id,
+					rate:new_rate
+				}).then((response) => {
+					change_rating(clicked);
+					alert("Tu calificación ha sido guardada.");
+				})
+				.catch((put_error) => {
+					console.log("PUT ERROR");
+					console.log(put_error);
+				});
+			})
+			.catch((get_error) => {
+				axios.post(p_path, {user: user_id, id_libro: libro_id, rate:new_rate}).then((response) => {
+					change_rating(clicked);
+					alert("Tu calificación ha sido guardada.");
+				})
+				.catch((post_error) => {
+
+					console.log("POST ERROR");
+					console.log(post_error)
+					
+				});
+			});
+
+		} else {
+			alert("Alerta de intruso!");
+		}
+	}
+
+	function GetURLParameter(sParam){
+		let sPageURL = window.location.search.substring(1);
+		let sURLVariables = sPageURL.split('&');
+		for (var i = 0; i < sURLVariables.length; i++)
+		{
+			sParameterName = sURLVariables[i].split('=');
+			if (sParameterName[0] == sParam)
+			{
+				return sParameterName[1];
+			}
+		}
+	}
+	
+	jQuery(document).ready(function($){
+
+		let libro_id = GetURLParameter('id');
+		let user_id = "myemail"; // pseudo logged user
+		if(user_id != undefined){
+			let path = 'http://127.0.0.1:8000/api/v1.0/rate/?user=' + user_id + '&libro=' + libro_id;
+
+			axios.get(path).then((response) => {
+				change_rating($(`.btnrating[data-attr='${response.data[0].rate}']`));
+			})
+			.catch((error) => {
+				console.log(error)
+			});
+		} 
+
+		$(".btnrating").on('click',( e => manage_rate(e.target)));
+	});
+
+	new Vue({
+		el:'#principal',
+
+		created: function(){
+
+			let libro_id = GetURLParameter('id');
+			this.getAutores(libro_id);
+			this.getLibro(libro_id);
+		},	
+		data:{
+			fields:[
+				{ key: 'nombre', label: 'Autores' },
+			],
+			libro: {},
+			autores: [],
+		}, 
+		methods:{
+			getAutores: function(libro_id){
+
+				const path = 'http://127.0.0.1:8000/api/v1.0/autor/?libro=' + libro_id;
+				axios.get(path).then((response) => {
+					this.autores = response.data;
+				})
+				.catch((error) => {
+					console.log(error)
+				});
+			},
+			getLibro: function(libro_id){
+
+				const path = 'http://127.0.0.1:8000/api/v1.0/libro/' + libro_id;
+				axios.get(path).then((response) => {
+					this.libro = response.data;
+				})
+				.catch((error) => {
+					console.log(error)
+				});
+			}
+		}
+	});
+</script>
+</body>
+</html>
